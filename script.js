@@ -44,6 +44,7 @@ const boomBoxEne = document.querySelector(".boom-box2");
 const winBox = document.querySelector(".game-end");
 const winLose = document.querySelector("#win");
 const winORlosePlayer = document.querySelector("#winner");
+const messageBox = document.querySelector(".winner");
 const continueGame = document.querySelector(".continue");
 
 // sound effect
@@ -72,6 +73,9 @@ let khelaHobe = new Audio("./audio/khelaHobe.mp3");
 gunSound.volume = 0.2;
 heliSound.volume = 0.7;
 heliFire.volume = 0.1;
+gunSoundEne.volume = 0.2;
+heliSoundEne.volume = 0.7;
+heliFireEne.volume = 0.1;
 jumpAu.volume = 1.0;
 
 // --- Game State Variables ---
@@ -131,7 +135,6 @@ function enemy() {
   let healthInPixStg2 = style2.getPropertyValue("width");
   let healthInPix2 = parseFloat(healthInPixStg2);
   let health2 = (healthInPix2 / window.innerWidth) * 100;
-  console.log("player :", parseInt(health2));
 
   if (attack == "gun") {
     gunSoundEne.play();
@@ -297,7 +300,6 @@ function startProtectLogic() {
     let healthInPixStg2 = style2.getPropertyValue("width");
     let healthInPix2 = parseFloat(healthInPixStg2);
     let health2 = (healthInPix2 / window.innerWidth) * 100;
-    console.log("player :", parseInt(health2));
 
     if (attackPro == "heli") {
     let n = 105;
@@ -524,10 +526,21 @@ function timer() {
         clearInterval(timing); // Stop the timer when it reaches zero
         stopEnemyLogic();
         stopProtectLogic();
+        stopAttacks();
         boom();
       }
     }, 1000);
   }
+}
+
+function stopAttacks(){
+  hasina.style.display = "flex";
+  dogBox.style.display = "none";
+  heliAttack.style.display = "none";
+  policeCar.style.display = "none";
+  dogBoxEne.style.display = "none";
+  heliAttackEne.style.display = "none";
+  policeCarEne.style.display = "none";
 }
 
 function boom() {
@@ -638,7 +651,8 @@ function winner() {
     if (cha == false) {
       laugh.play();
       winLose.style.display = "none";
-      winORlosePlayer.src = "./images/message.webp";
+      messageBox.innerHTML = `<img src="./images/message.webp" style="transform: scale(0.6);" alt="WINNER" id="winner">`;
+      // winORlosePlayer.src = "./images/message.webp";
     } else {
       win.play();
       winORlosePlayer.src = "./images/yunus2.0.webp";
@@ -842,7 +856,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let healthInPixStg = style.getPropertyValue("width");
       let healthInPix = parseFloat(healthInPixStg);
       let health = (healthInPix / window.innerWidth) * 100;
-      console.log("enemy :", parseInt(health));
 
       if (id == "gun") {
         gunSelect = true;
